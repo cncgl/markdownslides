@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" > <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" > <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" > <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="generator" content="pandoc" />
+  <meta name="description" content="Phoenix Framework" />
+  <meta name="author" content="Ruby舞鶴" />
+  <title>Phoenix Framework</title>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+
+  <!-- deck core css -->
+  <link rel="stylesheet" href="../lib/deck.js-master/core/deck.core.css">
+
+  <!-- deck extensions css -->
+  <link rel="stylesheet" href="../lib/deck.js-master/extensions/goto/deck.goto.css">
+  <link rel="stylesheet" href="../lib/deck.js-master/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" href="../lib/deck.js-master/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" href="../lib/deck.js-master/extensions/scale/deck.scale.css">
+  <link rel="stylesheet" href="../lib/deck.js-master/extensions/status/deck.status.css">
+
+  <!-- deck slide theme css -->
+  <link rel="stylesheet" href="../lib/deck.js-master/themes/style/web-2.0.css">
+  <!--
+  <link rel="stylesheet" href="../lib/deck.js-master/themes/style/neon.css">
+  <link rel="stylesheet" href="../lib/deck.js-master/themes/style/swiss.css">
+  <link rel="stylesheet" href="../lib/deck.js-master/themes/style/web-2.0.css">
+  -->
+
+  <!-- deck slide transition css -->
+  <link rel="stylesheet" href="../lib/deck.js-transition-cube-master/cube.css">
+  <!--
+  <link rel="stylesheet" href="../lib/deck.js-transition-cube-master/cube.css">
+  <link rel="stylesheet" href="../lib/deck.js-master/themes/transition/fade.css">
+  <link rel="stylesheet" href="../lib/deck.js-master/themes/transition/horizontal-slide.css">
+  <link rel="stylesheet" href="../lib/deck.js-master/themes/transition/vertical-slide.css">
+  -->
+
+  <!-- custom css just for this page -->
+  <style>
+    figcaption {
+      display: none;
+      visibility:hidden;
+    }
+
+    #titlepage, #documentauthor, #documentdate {
+      text-align: center;
+    }
+
+    #titlepage {
+      font-size: 5.25em;
+      padding-top: 15%;
+    }
+
+    #documentauthor {
+      font-size: 2.25em;
+    }
+
+    #documentdate {
+      font-size: 1.25em;
+    }
+  </style>
+
+  <!-- modernizr deck js  -->
+  <script src="../lib/deck.js-master/modernizr.custom.js"></script>
+
+</head>
+<body class="deck-container">
+<section class="slide">
+  <h2 id="titlepage">Phoenix Framework</h2>
+  <h3 id="documentauthor">Ruby舞鶴</h3>
+  <h4 id="documentdate">November 23 2015</h4>
+</section>
+
+<section id="who-am-i" class="titleslide slide level1"><h1><span class="header-section-number">1</span> Who am I?</h1></section><section id="who-am-i-1" class="slide level2">
+<h2><span class="header-section-number">1.1</span> Who am I?</h2>
+<ul>
+<li>近藤 茂 (twitter: <span class="citation" data-cites="subcigel">@subcigel</span>, github: cncgl)</li>
+<li>フリーエンジニア</li>
+<li>主にバックエンドとフロントエンド</li>
+<li>10年ぐらいのブランクがある(ほぼ新人)</li>
+</ul>
+</section>
+<section id="about" class="titleslide slide level1"><h1><span class="header-section-number">2</span> About</h1></section><section id="phoenix-framework-とは" class="slide level2">
+<h2><span class="header-section-number">2.1</span> Phoenix Framework とは</h2>
+<ul>
+<li>Elixir による Web Application Framework</li>
+<li>作者が Rails コミッターであり、Ruby on Rails ライクなつくり</li>
+<li>Erlang VM 上で動き、高速且つ堅牢</li>
+</ul>
+</section>
+<section id="インストール" class="titleslide slide level1"><h1><span class="header-section-number">3</span> インストール</h1></section><section id="elixir-のインストール" class="slide level2">
+<h2><span class="header-section-number">3.1</span> Elixir のインストール</h2>
+<ul>
+<li>OSX</li>
+</ul>
+<pre><code>$ brew install elixir</code></pre>
+<ul>
+<li>Ubuntu</li>
+</ul>
+<pre><code>$ sudo apt-get install elixir</code></pre>
+</section><section id="phoenix-のインストール" class="slide level2">
+<h2><span class="header-section-number">3.2</span> Phoenix のインストール</h2>
+<pre><code>$ mix local.hex
+$ mix archive.install https://github.com/phoenixframework/phoenix/releases/download/v1.0.3/phoenix_new-1.0.3.ez</code></pre>
+</section><section id="postgresql-のインストール" class="slide level2">
+<h2><span class="header-section-number">3.3</span> PostgreSQL のインストール</h2>
+<pre><code>$ sudo apt-get install PostgreSQL
+$ sudo passwd PostgreSQL
+新しい UNIX パスワードを入力してください: postgres
+新しい UNIX パスワードを再入力してください: postgres
+passwd: パスワードは正しく更新されました
+$ sudo -u postgres psql
+psql (9.4.5)
+Type &quot;help&quot; for help.
+
+postgres=# alter user postgres PASSWORD &#39;postgres&#39;;
+ALTER ROLE
+postgres=# \q</code></pre>
+</section><section id="inotify-のインストール" class="slide level2">
+<h2><span class="header-section-number">3.4</span> inotify のインストール</h2>
+<pre><code>$ sudo apt-get install inotify-tools</code></pre>
+<p>ファイルを監視して変更があればリロードします。</p>
+</section><section id="node.js-のインストール" class="slide level2">
+<h2><span class="header-section-number">3.5</span> Node.js のインストール</h2>
+<ul>
+<li>nvm でインストールします。 (Mac はnodebrew からインストールする方法もあるが共通の手順でできるため)</li>
+</ul>
+<pre><code>$ git clone git://github.com/creationix/nvm.git ~/.nvm</code></pre>
+<ul>
+<li>ログインシェルに追加する。</li>
+</ul>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">[[</span> <span class="ot">-s</span> <span class="st">&quot;</span><span class="ot">$HOME</span><span class="st">/.nvm/nvm.sh&quot;</span><span class="kw"> ]]</span> <span class="kw">&amp;&amp;</span> <span class="kw">source</span> <span class="st">&quot;</span><span class="ot">$HOME</span><span class="st">/.nvm/nvm.sh&quot;</span></code></pre>
+<ul>
+<li>最新版の node.js を取得する。</li>
+</ul>
+<pre><code>$ nvm ls-remote
+$ nvm install v5.1.0
+$ nvm use v5.1.0</code></pre>
+</section><section id="phoenix-プロジェクト生成" class="slide level2">
+<h2><span class="header-section-number">3.6</span> Phoenix プロジェクト生成</h2>
+<pre><code>$ mix phoenix.new hello_phoenix
+$ cd hello_phoenix
+$ mix ecto.create
+$ npm i
+$ mix phoenix.server</code></pre>
+<p>http://localhost:4000/ にアクセス</p>
+<figure>
+<img src="../img/phoenix_welcome.png" />
+</figure>
+</section><section id="build" class="slide level2">
+<h2><span class="header-section-number">3.7</span> Build</h2>
+<ul>
+<li>In the root folder you have to execute:</li>
+</ul>
+<pre><code>./build.sh [mode] [folder]</code></pre>
+<ul>
+<li><p>Where [<strong>mode</strong>] can take the next values:</p>
+<ul>
+<li>&quot;<strong>min</strong>&quot;: generate deck-slides and plain html.</li>
+<li>&quot;<strong>med</strong>&quot;: generate also reveal-slides, docx and odt (<strong>default value</strong>)</li>
+<li>&quot;<strong>max</strong>&quot;: generate all formats.</li>
+</ul></li>
+<li><p>And where [<strong>folder</strong>] is the name of the folder wher to find the md files. If no folder name, it will convert all md files of all the folders.</p></li>
+</ul>
+</section>
+<section id="author" class="titleslide slide level1"><h1><span class="header-section-number">4</span> Author</h1></section><section id="adolfo-sanz-de-diego" class="slide level2">
+<h2><span class="header-section-number">4.1</span> Adolfo Sanz De Diego</h2>
+<ul>
+<li><p><strong>Old JEE web developer</strong></p></li>
+<li><p>Today:</p>
+<ul>
+<li><p><strong>Computer teacher</strong>:</p>
+<ul>
+<li>Hardware, Operating Systems</li>
+<li>Networking, Programming</li>
+</ul></li>
+<li><p><strong>Freelance Trainer</strong>:</p>
+<ul>
+<li>Java, Android</li>
+<li>JavaScript, jQuery</li>
+<li>JSF, Spring, Hibernate</li>
+<li>Groovy &amp; Grails</li>
+</ul></li>
+<li><p><strong>I like to develop</strong></p></li>
+</ul></li>
+</ul>
+</section><section id="hackalover" class="slide level2">
+<h2><span class="header-section-number">4.2</span> Hackalover</h2>
+<figure>
+<img src="../img/hackathon-lovers-logo.png" />
+</figure>
+<ul>
+<li><p><strong>For hackathons lovers</strong></p>
+<ul>
+<li><strong>Meetup</strong>: <a href="http://www.meetup.com/Hackathon-Lovers/" class="uri">http://www.meetup.com/Hackathon-Lovers/</a></li>
+<li><strong>Twitter</strong>: <a href="http://twitter.com/HackathonLovers" class="uri">http://twitter.com/HackathonLovers</a></li>
+<li><strong>Blog</strong>: <a href="http://hackathonlovers.tumblr.com/" class="uri">http://hackathonlovers.tumblr.com/</a></li>
+<li><strong>LinkedIn</strong>: <a href="http://www.linkedin.com/groups/Hackathon-Lovers-6510465" class="uri">http://www.linkedin.com/groups/Hackathon-Lovers-6510465</a></li>
+<li><strong>YouTube</strong>: <a href="http://www.youtube.com/channel/UCRwSe7jK-y62BMvIiNBV1qw" class="uri">http://www.youtube.com/channel/UCRwSe7jK-y62BMvIiNBV1qw</a></li>
+</ul></li>
+</ul>
+</section><section id="tweets-sentiment" class="slide level2">
+<h2><span class="header-section-number">4.3</span> Tweets Sentiment</h2>
+<figure>
+<img src="../img/tweets-sentiment-logo.png" />
+</figure>
+<ul>
+<li><p>Is a <strong>tweets analyzer</strong> which extracts semantic information to know if the general tweets feeling about a topic is positive or negative.</p>
+<ul>
+<li><strong>Web</strong>: <a href="http://tweetssentiment.com/" class="uri">http://tweetssentiment.com/</a></li>
+<li><strong>Twitter</strong>: <a href="http://twitter.com/TweetsSentiment" class="uri">http://twitter.com/TweetsSentiment</a></li>
+</ul></li>
+</ul>
+</section><section id="where-to-find-me" class="slide level2">
+<h2><span class="header-section-number">4.4</span> Where to find me?</h2>
+<ul>
+<li><p>My nick: <strong>asanzdiego</strong></p>
+<ul>
+<li>AboutMe: <a href="http://about.me/asanzdiego" class="uri">http://about.me/asanzdiego</a></li>
+<li>GitHub: <a href="http://github.com/asanzdiego" class="uri">http://github.com/asanzdiego</a></li>
+<li>Twitter: <a href="http://twitter.com/asanzdiego" class="uri">http://twitter.com/asanzdiego</a></li>
+<li>Blog: <a href="http://asanzdiego.blogspot.com.es" class="uri">http://asanzdiego.blogspot.com.es</a></li>
+<li>LinkedIn: <a href="http://www.linkedin.com/in/asanzdiego" class="uri">http://www.linkedin.com/in/asanzdiego</a></li>
+<li>Google+: <a href="http://plus.google.com/+AdolfoSanzDeDiego" class="uri">http://plus.google.com/+AdolfoSanzDeDiego</a></li>
+</ul></li>
+</ul>
+</section>
+
+<!--footer id="footer">
+  <h4 class="author"> Ruby舞鶴  - November 23 2015</h4>
+</footer-->
+
+<!-- deck goto extension html -->
+<form action="." method="get" class="goto-form">
+  <label for="goto-slide">Go to slide:</label>
+  <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+  <datalist id="goto-datalist"></datalist>
+  <input type="submit" value="Go">
+</form>
+
+<!-- deck navigation extension html -->
+<div aria-role="navigation">
+  <a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+  <a href="#" class="deck-next-link" title="Next">&#8594;</a>
+</div>
+
+<!-- deck status extension html -->
+<p class="deck-status" aria-role="status">
+  <span class="deck-status-current"></span>
+  /
+  <span class="deck-status-total"></span>
+</p>
+
+<!-- jquery  -->
+<script src="../lib/deck.js-master/jquery.min.js"></script>
+
+<!-- deck core js  -->
+<script src="../lib/deck.js-master/core/deck.core.js"></script>
+
+<!-- deck extension js -->
+<script src="../lib/deck.js-master/extensions/goto/deck.goto.js"></script>
+<script src="../lib/deck.js-master/extensions/menu/deck.menu.js"></script>
+<script src="../lib/deck.js-master/extensions/navigation/deck.navigation.js"></script>
+<script src="../lib/deck.js-master/extensions/scale/deck.scale.js"></script>
+<script src="../lib/deck.js-master/extensions/status/deck.status.js"></script>
+<!--script src="../lib/deck.search.js-master/search/deck.search.js"></script-->
+
+<!-- Initialize the deck. -->
+<script>
+$(function() {
+    $.deck('.slide');
+});
+</script>
+
+</body>
+</html>
