@@ -102,74 +102,25 @@ http://localhost:4000/ にアクセス
 
 ![](../img/phoenix_welcome.png)
 
-## Build
 
-- In the root folder you have to execute:
+# 特徴
 
-~~~
-./build.sh [mode] [folder]
-~~~
+## Rails との違い
 
-- Where [**mode**] can take the next values:
 
-    - "**min**": generate deck-slides and plain html.
-    - "**med**": generate also reveal-slides, docx and odt (**default value**)
-    - "**max**": generate all formats.
+| Phoenix | Rails |
+|---------|-------|
+| mix | gem, rake, bundler |
+| ecto | ActiveRecord |
+| Plug | Rack |
+| CowBoy | WEBrick |
+| eex | erb |
 
-- And where [**folder**] is the name of the folder wher to find
-  the md files. If no folder name, it will convert all md files of all the folders.
 
-# Author
+# まとめ
 
-## Adolfo Sanz De Diego
+## まとめ
 
-- **Old JEE web developer**
-
-- Today:
-
-    - **Computer teacher**:
-
-        - Hardware, Operating Systems
-        - Networking, Programming
-
-    - **Freelance Trainer**:
-
-        - Java, Android
-        - JavaScript, jQuery
-        - JSF, Spring, Hibernate
-        - Groovy & Grails
-
-    - **I like to develop**
-
-### Hackalover
-
-![](../img/hackathon-lovers-logo.png)
-
-- **For hackathons lovers**
-
-    - **Meetup**: [http://www.meetup.com/Hackathon-Lovers/](http://www.meetup.com/Hackathon-Lovers/)
-    - **Twitter**: [http://twitter.com/HackathonLovers](http://twitter.com/HackathonLovers)
-    - **Blog**: [http://hackathonlovers.tumblr.com/](http://hackathonlovers.tumblr.com/)
-    - **LinkedIn**: [http://www.linkedin.com/groups/Hackathon-Lovers-6510465](http://www.linkedin.com/groups/Hackathon-Lovers-6510465)
-    - **YouTube**: [http://www.youtube.com/channel/UCRwSe7jK-y62BMvIiNBV1qw](http://www.youtube.com/channel/UCRwSe7jK-y62BMvIiNBV1qw)
-
-### Tweets Sentiment
-
-![](../img/tweets-sentiment-logo.png)
-
-- Is a **tweets analyzer** which extracts semantic information to know
-if the general tweets feeling about a topic is positive or negative.
-
-    - **Web**: [http://tweetssentiment.com/](http://tweetssentiment.com/)
-    - **Twitter**: [http://twitter.com/TweetsSentiment](http://twitter.com/TweetsSentiment)
-
-### Where to find me?
-
-- My nick: **asanzdiego**
-
-    - AboutMe:  [http://about.me/asanzdiego](http://about.me/asanzdiego)
-    - GitHub:   [http://github.com/asanzdiego](http://github.com/asanzdiego)
-    - Twitter:  [http://twitter.com/asanzdiego](http://twitter.com/asanzdiego)
-    - Blog:     [http://asanzdiego.blogspot.com.es](http://asanzdiego.blogspot.com.es)
-    - LinkedIn: [http://www.linkedin.com/in/asanzdiego](http://www.linkedin.com/in/asanzdiego)
-    - Google+:  [http://plus.google.com/+AdolfoSanzDeDiego](http://plus.google.com/+AdolfoSanzDeDiego)
+- Rails を知っていれば抵抗なく使える
+- 関数型プログラミングの勉強になる
+- 置き換えにより高速化、堅牢化できる
