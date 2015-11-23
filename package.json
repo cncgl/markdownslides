@@ -19,7 +19,6 @@
     "gulp-reveal": "^1.0.0",
     "phantomjs": "^1.9.18",
     "reveal.js": "^3.2.0",
-    "deck.js": "git@github.com:imakewebthings/deck.js.git",
     "webpage": "^0.3.0"
   },
   "scripts": {

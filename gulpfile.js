@@ -1,21 +1,16 @@
 var gulp = require('gulp');
-//var markdown = require('gulp-markdown');
 var replace = require('gulp-replace');
 var rename = require('gulp-rename');
-//var exec = require('gulp-exec');
 var glob = require('glob');
 var path = require('path');
 var exec = require('child_process').exec;
 var execFile = require('child_process').execFile;
 var execSync = require('child_process').execSync;
 var spawn = require('child_process').spawn;
-//var pandoc = require('gulp-pandoc');
 var reveal = require('gulp-reveal');
 var phantom = require('gulp-phantom');
-//var Q = require('q');
 
 gulp.task('init', function(callback) {
-//  var deferred = Q.defer();
   var wait_max = 2;
   var wait_count = 0;
   function onEnd() {
@@ -48,32 +43,10 @@ gulp.task('init', function(callback) {
     }))
     .pipe(gulp.dest('doc/export'))
     .on('end', function() { onEnd(); });
-
-//  return deferred.promise;
 });
 
 gulp.task('build', ['init'], function() {
-  // gulp.src('./doc/export/readme.md')
-  //  .pipe(exec('pandoc -w revealjs -f markdown --template ./templates/reveal-slides-template.html --number-sections --email-obfuscation=none -o ./doc/export/<%=file.basebane %>.html'))
-  //  ;
-
-//  gulp.src('doc/export/readme.md')
-//    .pipe(pandoc({
-      // from: 'markdown',
-      // to: 'revealjs',
-      // ext: '.html',
-//      args: [
-//        '-w', 'revealjs',
-//        '--template', 'templates/reveal-slides-template.html',
-//        '--number-sections', '--email-obfuscation=none'
-//      ]
-//    }));
-
-//    .pipe(gulp.dest('doc/export'));
-//  gulp.src('doc/export/readme-to-slides.md')
-//    .pipe(
     glob('doc/export/*.md', function(er, files) {
-      //console.log(files);
       for(var i=0; i<files.length; i++) {
         console.log(path.parse(files[i]).name);
         var input = path.parse(files[i]).name;
@@ -99,26 +72,10 @@ gulp.task('build', ['init'], function() {
         // REVEAL.js のPDF
         execFile('./node_modules/.bin/phantomjs',
           ['./node_modules/reveal.js/plugin/print-pdf/print-pdf.js',
-            'doc/export/readme-to-slides.html?print-pdf',
+            'doc/export/readme-reveal-slides.html?print-pdf',
             'doc/export/' + input + '-reveal-slides.pdf']);
       }
     });
-
-
-//    .pipe(pandoc({
-//      from: 'markdown',
-//      to: 'revealjs',
-//      ext: '.html',
-//      args: [
-//        '-w', 'revealjs',
-//        '--template', 'templates/reveal-slides-template.html',
-//        '--number-sections', '--email-obfuscation=none'
-//      ]
-//    }));
-//  .pipe(gulp.dest('doc/export'));
-//   .pipe(markdown())
-//   .pipe(reveal())
-//   .pipe(gulp.dest('doc/export'));
 });
 
 gulp.task('watch', function() {
