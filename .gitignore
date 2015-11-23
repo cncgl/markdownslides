@@ -1,3 +1,10 @@
 slides
+.idea
 node_modules
-doc/export
+tmp
+*.log
+
+doc/md/*.md
+doc/export/*.md
+doc/export/*.html
+doc/export/*.pdf
