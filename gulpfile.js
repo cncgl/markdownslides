@@ -3,15 +3,41 @@ var replace = require('gulp-replace');
 var rename = require('gulp-rename');
 var glob = require('glob');
 var path = require('path');
-var exec = require('child_process').exec;
-var execFile = require('child_process').execFile;
+// var exec = require('child_process').exec;
+// var execFile = require('child_process').execFile;
 var execSync = require('child_process').execSync;
 var spawn = require('child_process').spawn;
-var reveal = require('gulp-reveal');
-var phantom = require('gulp-phantom');
+// var reveal = require('gulp-reveal');
+// var phantom = require('gulp-phantom');
 var pwd = require('process').cwd();
+var download = require('gulp-downloader');
+var unzip = require('gulp-unzip');
 
-gulp.task('init', function(callback) {
+gulp.task('download', function(callback) {
+  var wait_max = 3, wait_count =0;
+  function onEnd() {
+    if(wait_max === ++wait_count) {
+      callback();
+    }
+  }
+  download('https://github.com/imakewebthings/deck.js/archive/master.zip')
+    .pipe(unzip())
+    .pipe(gulp.dest('lib'))
+    .on('end', function() { onEnd(); });
+  download('https://github.com/markahon/deck.search.js/archive/master.zip')
+    .pipe(unzip())
+    .pipe(gulp.dest('lib'))
+    .on('end', function() { onEnd(); });
+  download('https://github.com/mikeharris100/deck.js-transition-cube/archive/master.zip')
+    .pipe(unzip())
+    .pipe(gulp.dest('lib'))
+    .on('end', function() { onEnd(); });
+});
+
+
+
+
+gulp.task('init', ['download'], function(callback) {
   var wait_max = 2;
   var wait_count = 0;
   function onEnd() {
@@ -60,18 +86,28 @@ gulp.task('build', ['init'], function() {
         // reveal.js スライド
         output = 'build/' + input + '-reveal-slides.html';
         console.log('generating reveal slides: ' + output);
-        spawn('pandoc',
+        execSync('pandoc',
           ['-w', 'revealjs', '--template', './templates/reveal-slides-template.html',
             '--number-sections', '--email-obfuscation=none',
             '-o', output, src]);
+        gulp.src(output)
+          .pipe(replace('h1>', 'h2>'))
+          .pipe(replace('><h2', '><h1'))
+          .pipe(replace('\/h2><', '/h1><'))
+          .pipe(gulp.dest('build'));
 
         // deck.js スライド
         output = 'build/' + input + '-deck-slides.html';
         console.log('generating deck slides: ' + output);
-        spawn('pandoc',
+        execSync('pandoc',
           ['-w', 'dzslides', '--template', './templates/deck-slides-template.html',
             '--number-sections', '--email-obfuscation=none',
             '-o', output, src]);
+        gulp.src(output)
+          .pipe(replace('h1>', 'h2>'))
+          .pipe(replace('><h2', '><h1'))
+          .pipe(replace('\/h2><', '/h1><'))
+          .pipe(gulp.dest('build'));
 
         // REVEAL.js のPDF
         output = 'build/' + input + '-reveal-slides.pdf';

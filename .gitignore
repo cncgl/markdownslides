@@ -4,6 +4,7 @@ node_modules
 tmp
 *.log
 build
+lib
 
 img/*
 !img/.gitkeep
