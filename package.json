@@ -1,8 +1,12 @@
 {
-  "name": "myslide",
-  "version": "1.0.0",
-  "description": "",
+  "name": "markdownslides",
+  "version": "0.0.1",
+  "description": "Make slides by markdown",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cncgl/markdownslides"
+  },
   "directories": {
     "doc": "doc"
   },
@@ -11,20 +15,17 @@
   },
   "devDependencies": {
     "gulp-exec": "^2.1.2",
-    "gulp-pandoc": "^0.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
-    "gulp-reveal": "^1.0.0",
     "gulp-downloader": "1.0.4",
     "gulp-unzip": "0.1.3",
     "phantomjs": "^1.9.18",
-    "reveal.js": "^3.2.0",
-    "webpage": "^0.3.0"
+    "reveal.js": "^3.2.0"
   },
   "scripts": {
     "build": "gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "cncgl",
-  "license": "MIT"
+  "license": "GPL"
 }

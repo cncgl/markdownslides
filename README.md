@@ -1,18 +1,23 @@
 # markdownslides
 make markdown to slides
 
+## Dependences
 
-## install
+- [Pandoc](http://pandoc.org/) (needs to be installed)
+
+## Install
 
 ```
 $ npm i
 ```
 
-## build
+## Build
 
+Write markdown files in `src` directory , image files put in `img` directory and execute:
+ 
 ```
 $ npm run build
 ```
 
 ## License
-MIT
+- [GPL 3.0](http://www.viti.es/gnu/licenses/gpl.html)
