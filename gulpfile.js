@@ -30,12 +30,8 @@ gulp.task('download', function(callback) {
     .on('end', function() { onEnd(); });
 });
 
-
-
-
 gulp.task('init', ['download'], function(callback) {
-  var wait_max = 2;
-  var wait_count = 0;
+  var wait_max = 2, wait_count = 0;
   function onEnd() {
     if(wait_max === ++wait_count) {
       callback();
@@ -71,15 +67,14 @@ gulp.task('init', ['download'], function(callback) {
 gulp.task('build', ['init'], function() {
   glob('build/*.md', function(er, files) {
     for(var i=0; i<files.length; i++) {
-      // console.log(path.parse(files[i]).name);
       var input = path.parse(files[i]).name, src, output;
 
-      // スライド
+      // slides
       if ( input.indexOf('-to-slides') >= 0 ) {
         input = input.replace(/-to-slides/, '');
         src = 'build/' + input + '-to-slides.md';
 
-        // reveal.js スライド
+        // reveal.js slides
         output = 'build/' + input + '-reveal-slides.html';
         console.log('generating reveal slides: ' + output);
         execSync('pandoc',
@@ -92,7 +87,7 @@ gulp.task('build', ['init'], function() {
           .pipe(replace('\/h2><', '/h1><'))
           .pipe(gulp.dest('build'));
 
-        // deck.js スライド
+        // deck.js slides
         output = 'build/' + input + '-deck-slides.html';
         console.log('generating deck slides: ' + output);
         execSync('pandoc',
@@ -105,7 +100,7 @@ gulp.task('build', ['init'], function() {
           .pipe(replace('\/h2><', '/h1><'))
           .pipe(gulp.dest('build'));
 
-        // REVEAL.js のPDF
+        // PDF of reveal.js
         output = 'build/' + input + '-reveal-slides.pdf';
         console.log('generating reveal pdf: ' + output);
         spawn('./node_modules/.bin/phantomjs',
@@ -113,7 +108,7 @@ gulp.task('build', ['init'], function() {
             'build/readme-reveal-slides.html?print-pdf', output],
           { cwd: pwd });
       }
-      // 出版
+      // publish
       else if (input.indexOf('-to-book') >= 0 ) {
         input = input.replace(/-to-book/, '');
         src = 'build/' + input + '-to-book.md';
@@ -127,7 +122,7 @@ gulp.task('build', ['init'], function() {
             '--toc', '--highlight-style=tango',
             '-o', output, src]);
 
-        // docx docx と odt はディレクトリを変えないと画像が取得できない。
+        // docx : need to change directory in order to get image.
         src = input + '-to-book.md';
         output = input + '.docx';
         console.log('generating docx: build/' + output);
@@ -137,7 +132,7 @@ gulp.task('build', ['init'], function() {
             '-o', output, src],
           { cwd: pwd+'/build' });
 
-        // odt
+        // odt : need to change directory in order to get image.
         output = input + '.odt';
         console.log('generating odt: build/' + output);
         spawn('pandoc',
@@ -145,14 +140,6 @@ gulp.task('build', ['init'], function() {
             '--number-sections', '--table-of-contents', '--chapters',
             '-o', output, src],
           { cwd: pwd+'/build' });
-
-        // pdf ... pdflatex が必要なので保留
-        // console.log('generating pdf:' + pwd);
-        // spawn('pandoc',
-        //  [ '--number-sections', '--table-of-contents', '--chapters',
-        //    '-o', input + '.pdf',
-        //    input + '-to-book.md'],
-        //  { cwd: pwd+'/build' });
       }
     }
   });

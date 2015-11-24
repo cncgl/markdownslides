@@ -1,7 +1,8 @@
 # markdownslides
-make markdown to slides
 
-## Dependences
+- make markdown to slides
+
+## Requirement
 
 - [Pandoc](http://pandoc.org/) (needs to be installed)
 
