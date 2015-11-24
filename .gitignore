@@ -5,6 +5,7 @@ tmp
 *.log
 build
 
-
-# !img/.gitkeep
-# !src/.gitkeep
+img/*
+!img/.gitkeep
+src/*
+!src/.gitkeep

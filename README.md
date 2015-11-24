@@ -1,2 +1,18 @@
 # markdownslides
-Test for markdown slides
+make markdown to slides
+
+
+## install
+
+```
+$ npm i
+```
+
+## build
+
+```
+$ npm run build
+```
+
+## License
+MIT
