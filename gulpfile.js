@@ -19,16 +19,16 @@ gulp.task('init', function(callback) {
     }
   }
 
-  gulp.src('doc/md/*.md')
+  gulp.src('src/*.md')
     .pipe(replace(/###*/g, '##'))
     .pipe(replace(/##\\#/g, '###'))
     .pipe(rename(function(path) {
       path.basename += "-to-slides";
     }))
-    .pipe(gulp.dest('doc/export'))
+    .pipe(gulp.dest('build'))
     .on('end', function() { onEnd(); });
 
-  gulp.src('doc/md/*.md')
+  gulp.src('src/*.md')
     .pipe(replace(/% !\[/g, '!\['))
     .pipe(replace(/ \(I\)/g, ''))
     .pipe(replace(/.*\(I.*/g, ''))
@@ -41,41 +41,44 @@ gulp.task('init', function(callback) {
     .pipe(rename(function(path) {
       path.basename += "-to-book";
     }))
-    .pipe(gulp.dest('doc/export'))
+    .pipe(gulp.dest('build'))
     .on('end', function() { onEnd(); });
 });
 
 gulp.task('build', ['init'], function() {
-    glob('doc/export/*.md', function(er, files) {
-      for(var i=0; i<files.length; i++) {
-        console.log(path.parse(files[i]).name);
-        var input = path.parse(files[i]).name;
-        if ( input.indexOf('-to-slides') < 0 ) continue;
+  glob('build/*.md', function(er, files) {
+    for(var i=0; i<files.length; i++) {
+      console.log(path.parse(files[i]).name);
+      var input = path.parse(files[i]).name;
+      if ( input.indexOf('-to-slides') < 0 ) continue;
 
-        input = input.replace(/-to-slides/, '');
-        console.log('convert:' + input);
+      input = input.replace(/-to-slides/, '');
+      console.log('convert:' + input);
 
-        // reveal.js スライド
-        execFile('pandoc',
-          ['-w', 'revealjs', '--template', 'templates/reveal-slides-template.html',
-            '--number-sections', '--email-obfuscation=none',
-            '-o', 'doc/export/' + input + '-reveal-slides.html',
-            'doc/export/' + input + '-to-slides.md']);
+      // reveal.js スライド
+      console.log('generating reveal slides');
+      execFile('pandoc',
+        ['-w', 'revealjs', '--template', './templates/reveal-slides-template.html',
+          '--number-sections', '--email-obfuscation=none',
+          '-o', 'build/' + input + '-reveal-slides.html',
+          'build/' + input + '-to-slides.md']);
 
-        // deck.js スライド
-        execFile('pandoc',
-          ['-w', 'dzslides', '--template', 'templates/deck-slides-template.html',
-            '--number-sections', '--email-obfuscation=none',
-            '-o', 'doc/export/' + input + '-deck-slides.html',
-            'doc/export/' + input + '-to-slides.md']);
+      // deck.js スライド
+      console.log('generating deck slides');
+      execFile('pandoc',
+        ['-w', 'dzslides', '--template', './templates/deck-slides-template.html',
+          '--number-sections', '--email-obfuscation=none',
+          '-o', 'build/' + input + '-deck-slides.html',
+          'build/' + input + '-to-slides.md']);
 
-        // REVEAL.js のPDF
-        execFile('./node_modules/.bin/phantomjs',
-          ['./node_modules/reveal.js/plugin/print-pdf/print-pdf.js',
-            'doc/export/readme-reveal-slides.html?print-pdf',
-            'doc/export/' + input + '-reveal-slides.pdf']);
-      }
-    });
+      // REVEAL.js のPDF
+      console.log('generating reveal pdf');
+      execFile('./node_modules/.bin/phantomjs',
+        ['./node_modules/reveal.js/plugin/print-pdf/print-pdf.js',
+          'build/readme-reveal-slides.html?print-pdf',
+          'build/' + input + '-reveal-slides.pdf']);
+    }
+  });
 });
 
 gulp.task('watch', function() {

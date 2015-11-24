@@ -3,8 +3,8 @@ slides
 node_modules
 tmp
 *.log
+build
 
-doc/md/*.md
-doc/export/*.md
-doc/export/*.html
-doc/export/*.pdf
+
+# !img/.gitkeep
+# !src/.gitkeep
