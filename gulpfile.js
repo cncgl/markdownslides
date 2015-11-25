@@ -1,13 +1,14 @@
 var gulp = require('gulp');
+var browserSync = require('browser-sync');
 var replace = require('gulp-replace');
 var rename = require('gulp-rename');
 var glob = require('glob');
 var path = require('path');
-var execSync = require('child_process').execSync;
 var spawn = require('child_process').spawn;
 var pwd = require('process').cwd();
 var download = require('gulp-downloader');
 var unzip = require('gulp-unzip');
+var Q = require('q');
 
 gulp.task('download', function(callback) {
   var wait_max = 3, wait_count =0;
@@ -68,6 +69,7 @@ gulp.task('build', ['init'], function() {
   glob('build/*.md', function(er, files) {
     for(var i=0; i<files.length; i++) {
       var input = path.parse(files[i]).name, src, output;
+      //var deferred = Q.defer();
 
       // slides
       if ( input.indexOf('-to-slides') >= 0 ) {
@@ -75,38 +77,83 @@ gulp.task('build', ['init'], function() {
         src = 'build/' + input + '-to-slides.md';
 
         // reveal.js slides
-        output = 'build/' + input + '-reveal-slides.html';
-        console.log('generating reveal slides: ' + output);
-        execSync('pandoc',
-          ['-w', 'revealjs', '--template', './templates/reveal-slides-template.html',
-            '--number-sections', '--email-obfuscation=none',
-            '-o', output, src]);
-        gulp.src(output)
-          .pipe(replace('h1>', 'h2>'))
-          .pipe(replace('><h2', '><h1'))
-          .pipe(replace('\/h2><', '/h1><'))
-          .pipe(gulp.dest('build'));
+        var taskA = function() {
+          return new Promise(function(resolve, reject) {
+            output = 'build/' + input + '-reveal-slides.html';
+            console.log('generating reveal slides: ' + output);
+            spawn('pandoc',
+              ['-w', 'revealjs', '--template', './templates/reveal-slides-template.html',
+                '--number-sections', '--email-obfuscation=none',
+                '-o', output, src])
+              .on('exit', function() {
+                console.log('done: reveal slides');
+                resolve();
+              });
+          });
+        };
+        var taskB = function() {
+          return new Promise(function(resolve, reject) {
+            output = 'build/' + input + '-reveal-slides.html';
+            gulp.src(output)
+              .pipe(replace('h1>', 'h2>'))
+              .pipe(replace('><h2', '><h1'))
+              .pipe(replace('/h2><', '/h1><'))
+              .pipe(gulp.dest('build'))
+              .on('end', function() {
+                console.log('done: reveal slides adjust');
+                resolve();
+              });
+          })
+        };
 
         // deck.js slides
-        output = 'build/' + input + '-deck-slides.html';
-        console.log('generating deck slides: ' + output);
-        execSync('pandoc',
-          ['-w', 'dzslides', '--template', './templates/deck-slides-template.html',
-            '--number-sections', '--email-obfuscation=none',
-            '-o', output, src]);
-        gulp.src(output)
-          .pipe(replace('h1>', 'h2>'))
-          .pipe(replace('><h2', '><h1'))
-          .pipe(replace('\/h2><', '/h1><'))
-          .pipe(gulp.dest('build'));
+        var taskC = function() {
+          return new Promise(function(resolve, reject) {
+            output = 'build/' + input + '-deck-slides.html';
+            console.log('generating deck slides: ' + output);
+            spawn('pandoc',
+              ['-w', 'dzslides', '--template', './templates/deck-slides-template.html',
+                '--number-sections', '--email-obfuscation=none',
+                '-o', output, src])
+              .on('exit', function() {
+                console.log('done: deck slides');
+                resolve();
+              });
+          });
+        };
+
+        var taskD = function() {
+          return new Promise(function(resolve, reject) {
+            output = 'build/' + input + '-deck-slides.html';
+            gulp.src(output)
+              .pipe(replace('h1>', 'h2>'))
+              .pipe(replace('><h2', '><h1'))
+              .pipe(replace('/h2><', '/h1><'))
+              .pipe(gulp.dest('build'))
+              .on('end', function() {
+                console.log('done: deck slides adjust');
+                resolve();
+              });
+          });
+        };
 
         // PDF of reveal.js
-        output = 'build/' + input + '-reveal-slides.pdf';
-        console.log('generating reveal pdf: ' + output);
-        spawn('./node_modules/.bin/phantomjs',
-          ['./node_modules/reveal.js/plugin/print-pdf/print-pdf.js',
-            'build/readme-reveal-slides.html?print-pdf', output],
-          { cwd: pwd });
+        var taskE = function() {
+          return new Promise(function(resolve, reject) {
+            output = 'build/' + input + '-reveal-slides.pdf';
+            console.log('generating reveal pdf: ' + output);
+            spawn('./node_modules/.bin/phantomjs',
+              ['./node_modules/reveal.js/plugin/print-pdf/print-pdf.js',
+                'build/readme-reveal-slides.html?print-pdf', output],
+              { cwd: pwd })
+              .on('exit', function() {
+                console.log('done: reveal pdf');
+                resolve();
+              });
+          });
+        };
+
+        taskA().then(taskB).then(taskC).then(taskD).then(taskE);
       }
       // publish
       else if (input.indexOf('-to-book') >= 0 ) {
@@ -128,7 +175,7 @@ gulp.task('build', ['init'], function() {
         console.log('generating docx: build/' + output);
         spawn('pandoc',
           ['-w', 'docx',
-            '--number-sections', '--table-of-contents', '--chapters',
+            '--number-sections', '--toc', '--chapters',
             '-o', output, src],
           { cwd: pwd+'/build' });
 
@@ -137,7 +184,7 @@ gulp.task('build', ['init'], function() {
         console.log('generating odt: build/' + output);
         spawn('pandoc',
           ['-w', 'odt',
-            '--number-sections', '--table-of-contents', '--chapters',
+            '--number-sections', '--toc', '--chapters',
             '-o', output, src],
           { cwd: pwd+'/build' });
       }
@@ -145,6 +192,11 @@ gulp.task('build', ['init'], function() {
   });
 });
 
-gulp.task('watch', function() {
-  gutlp.watch('doc/md/*.md', ['build']);
+gulp.task('browser-sync', function() {
+  browserSync({ server: { baseDir: './' }});
+});
+
+gulp.task('watch', ['build', 'browser-sync'], function() {
+  gulp.watch('src/*.md', ['build']);
+  gulp.watch('build/*.html').on('change', browserSync.reload);
 });
