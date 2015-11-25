@@ -8,7 +8,6 @@ var spawn = require('child_process').spawn;
 var pwd = require('process').cwd();
 var download = require('gulp-downloader');
 var unzip = require('gulp-unzip');
-var Q = require('q');
 
 gulp.task('download', function(callback) {
   var wait_max = 3, wait_count =0;
@@ -69,7 +68,6 @@ gulp.task('build', ['init'], function() {
   glob('build/*.md', function(er, files) {
     for(var i=0; i<files.length; i++) {
       var input = path.parse(files[i]).name, src, output;
-      //var deferred = Q.defer();
 
       // slides
       if ( input.indexOf('-to-slides') >= 0 ) {

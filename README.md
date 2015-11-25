@@ -14,10 +14,18 @@ $ npm i
 
 ## Build
 
-Write markdown files in `src` directory , image files put in `img` directory and execute:
+Write markdown files in `src` directory, image files put in `img` directory and execute:
  
 ```
 $ npm run build
+```
+
+## Execute
+
+Run web server for presentation. When markdown is modified, the browser will be reloaded.
+
+```
+$ npm run serve
 ```
 
 ## License
