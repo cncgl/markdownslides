@@ -28,5 +28,9 @@ Run web server for presentation. When markdown is modified, the browser will be 
 $ npm run serve
 ```
 
+## Thanks
+
+Template files was referred to this repository: https://github.com/asanzdiego/markdownslides
+
 ## License
 - [GPL 3.0](http://www.viti.es/gnu/licenses/gpl.html)
