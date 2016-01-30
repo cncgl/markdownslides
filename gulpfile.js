@@ -6,31 +6,8 @@ var glob = require('glob');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var pwd = require('process').cwd();
-var download = require('gulp-downloader');
-var unzip = require('gulp-unzip');
 
-gulp.task('download', function(callback) {
-  var wait_max = 3, wait_count =0;
-  function onEnd() {
-    if(wait_max === ++wait_count) {
-      callback();
-    }
-  }
-  download('https://github.com/imakewebthings/deck.js/archive/master.zip')
-    .pipe(unzip())
-    .pipe(gulp.dest('lib'))
-    .on('end', function() { onEnd(); });
-  download('https://github.com/markahon/deck.search.js/archive/master.zip')
-    .pipe(unzip())
-    .pipe(gulp.dest('lib'))
-    .on('end', function() { onEnd(); });
-  download('https://github.com/mikeharris100/deck.js-transition-cube/archive/master.zip')
-    .pipe(unzip())
-    .pipe(gulp.dest('lib'))
-    .on('end', function() { onEnd(); });
-});
-
-gulp.task('init', ['download'], function(callback) {
+gulp.task('init', function(callback) {
   var wait_max = 2, wait_count = 0;
   function onEnd() {
     if(wait_max === ++wait_count) {
@@ -104,37 +81,6 @@ gulp.task('build', ['init'], function() {
           })
         };
 
-        // deck.js slides
-        var taskC = function() {
-          return new Promise(function(resolve, reject) {
-            output = 'build/' + input + '-deck-slides.html';
-            console.log('generating deck slides: ' + output);
-            spawn('pandoc',
-              ['-w', 'dzslides', '--template', './templates/deck-slides-template.html',
-                '--number-sections', '--email-obfuscation=none',
-                '-o', output, src])
-              .on('exit', function() {
-                console.log('done: deck slides');
-                resolve();
-              });
-          });
-        };
-
-        var taskD = function() {
-          return new Promise(function(resolve, reject) {
-            output = 'build/' + input + '-deck-slides.html';
-            gulp.src(output)
-              .pipe(replace('h1>', 'h2>'))
-              .pipe(replace('><h2', '><h1'))
-              .pipe(replace('/h2><', '/h1><'))
-              .pipe(gulp.dest('build'))
-              .on('end', function() {
-                console.log('done: deck slides adjust');
-                resolve();
-              });
-          });
-        };
-
         // PDF of reveal.js
         var taskE = function() {
           return new Promise(function(resolve, reject) {
@@ -151,7 +97,7 @@ gulp.task('build', ['init'], function() {
           });
         };
 
-        taskA().then(taskB).then(taskC).then(taskD).then(taskE);
+        taskA().then(taskB).then(taskE);
       }
       // publish
       else if (input.indexOf('-to-book') >= 0 ) {
